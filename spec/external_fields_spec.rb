@@ -117,6 +117,14 @@ RSpec.describe ExternalFields do
           expect(AssociationTestClass.count).to eq(1)
         end
 
+        it "does save non-empty values when using assoc name" do
+          e = TestClass.create!
+          e.name = "TEST"
+          e.assoc.ext_field = "A test"
+          e.save!
+          expect(AssociationTestClass.count).to eq(1)
+        end
+
         it "returns association value with id" do
           e = TestClass.create!
           e.name = "TEST"
@@ -151,6 +159,14 @@ RSpec.describe ExternalFields do
           e = TestClass.create!
           e.name = "TEST"
           e.ext_field_using_empties_not_saved = "Another test"
+          e.save!
+          expect(NoEmptiesAssociationTestClass.count).to eq(1)
+        end
+
+        it "does save non-empty values when using assoc name" do
+          e = TestClass.create!
+          e.name = "TEST"
+          e.no_empties_assoc.ext_field_using_empties_not_saved = "Another test"
           e.save!
           expect(NoEmptiesAssociationTestClass.count).to eq(1)
         end
